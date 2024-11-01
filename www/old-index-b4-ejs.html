@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yohn's AI Chat Bot Preview</title>
+<meta name="description" content="Lets create a chat bot using AI My Way">
+<meta name="keywords" content="AI Chat Bot,AI Model,Custom Chat,Learning AI">
+
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🤖</text></svg>">
+<!--<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.css" rel="stylesheet">-->
+<link rel="stylesheet" href="/assets/css/yohns.auto.css">
+<style>
+.chat-container {
+	height: calc(100vh - 80px);
+	display: flex;
+	flex-direction: column;
+}
+.card-body {
+	display: flex;
+	flex-direction: column;
+	padding: 1rem;
+	gap: 1rem;
+	height: 100%;
+}
+.chat-messages {
+	flex: 1;
+	overflow-y: auto;
+	min-height: 0;  /* Important for proper flexbox scrolling */
+}
+.input-area {
+	flex-shrink: 0;  /* Prevents the input area from shrinking */
+}
+form textarea {
+	resize: none;
+	min-height: 38px;  /* Height of a single line */
+	max-height: 40vh;
+}
+.settings-container {
+	height: calc(100vh - 80px);
+}
+</style>
+</head>
+<body>
+<header class="py-1 mb-1 border-bottom border-top border-primary-subtle bg-dark-subtle">
+	<div class="container">
+		<div class="d-flex flex-wrap justify-content-center">
+			<a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+				<img style="height:32px; width:atuo;" alt="AI Robot on Computer" src="/assets/svg/ai-6e9dd4.svg">
+				<span class="fs-4">Yohns AI Chat</span>
+			</a>
+			<ul class="nav">
+				<li class="nav-item"><a href="/" class="nav-link active" aria-current="page">Home</a></li>
+				<li>
+					<button class="btn btn-primary settings-button" type="button"
+						data-bs-toggle="collapse" data-bs-target="#sidePanel"
+						aria-expanded="false" aria-controls="sidePanel">
+						<i class="bi bi-gear"></i>
+					</button>
+				<li>
+			</ul>
+		</div>
+	</div>
+</header>
+
+<div class="container-fluid py-3">
+	<div class="row">
+		<!-- Chat Column -->
+		<div class="col mb-3">
+
+			<div class="card bg-dark-subtle chat-container">
+				<div class="card-body d-flex flex-column">
+					<!-- Chat Messages Area -->
+					<div class="chat-messages mb-3 bg-dark rounded p-3">
+						<!-- Messages will go here -->
+						<div class="text-light">Messages will appear here...</div>
+					</div>
+
+					<!-- Input Area -->
+					<div class="input-area">
+						<form class="d-flex gap-2" id="chat-form" role="form">
+							<textarea id="chat-msg" class="form-control" placeholder="Type your message..."></textarea>
+							<button type="submit" class="btn btn-primary align-self-end">
+								<i class="bi bi-send"></i>
+							</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-auto collapse collapse-horizontal show" id="sidePanel">
+			<div class="card bg-dark-subtle settings-container">
+				<div class="card-body">
+						<h5 class="card-title">Settings</h5>
+						<div class="text-light">Settings content will go here...</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="py-3 border-top">
+	<div class="container">
+		<footer class="d-flex flex-wrap justify-content-between align-items-center">
+			<div class="col-md-4 d-flex align-items-center">
+				<a href="/" class="mb-3 me-2 mb-md-0 text-body-secondary text-decoration-none lh-1">
+					<img style="height:32px; width:atuo;" alt="AI Robot on Computer" src="/assets/svg/ai-6e9dd4.svg">
+				</a>
+				<span class="mb-3 mb-md-0 text-body-secondary">&copy; 2024 JW3B by Yohn</span>
+	 		</div>
+			<ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
+				<li class="ms-3">
+					<a class="text-body-secondary" href="https://github.com/Yohn" target="_blank" title="Yohn on Github" data-bs-toggle="tooltip">
+						<i class="bi bi-github fs-4"></i>
+					</a>
+				</li>
+			</ul>
+  	</footer>
+	</div>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/assets/js/site.js"></script>
+</body>
+</html>

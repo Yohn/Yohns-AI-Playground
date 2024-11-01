@@ -1,0 +1,471 @@
+
+
+// need to ensure the fonts were copied correctly via the package.json settings
+$bootstrap-icons-font-dir: "./../fonts";
+@import '~bootstrap-icons/font/bootstrap-icons.scss';
+
+@import "~bootstrap/scss/mixins/banner";
+@include bsBanner("");
+
+
+// scss-docs-start import-stack
+// Configuration
+@import "~bootstrap/scss/functions";
+
+
+$zindex-modal-backdrop:             1040;
+$zindex-modal:                      1045;
+$zindex-offcanvas-backdrop:         1050;
+$zindex-offcanvas:                  1055;
+
+$offcanvas-horizontal-width:        500px;
+
+$primary: #6e9ee4; // compile
+$enable-shadows: true;
+$enable-rfs: false;
+$enable-deprecation-messages: false;
+$enable-gradients: true;
+$enable-negative-margins: true;
+ // spins in 	- translate3d(-100%, 0, 0) rotate3d(0, 0, 1, -120deg);
+ // zoom 			- scale(.8);
+ $modal-fade-transform: translate3d(-100%, 0, 0) rotate3d(0, 0, 1, -120deg);
+//$modal-fade-transform:              translate(0, -50px) !default;
+//$modal-show-transform:              none !default;
+//$modal-transition:                  transform .3s ease-out !default;
+//$modal-scale-transform:             scale(1.02) !default;
+
+//$icon-link-icon-transition:   .2s ease-in-out transform !default;
+//$icon-link-icon-transform:    translate3d(.25em, 0, 0) !default;
+
+//$transition-base:             all .2s ease-in-out !default;
+//$transition-fade:             opacity .15s linear !default;
+//// scss-docs-start collapse-transition
+//$transition-collapse:         height .35s ease !default;
+//$transition-collapse-width:   width .35s ease !default;
+
+//// scss-docs-end collapse-transition
+
+//$btn-transition:              			 color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out !default;
+//$pagination-transition:              color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out !default;
+//$btn-transition:              		color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out !default;
+//$pagination-transition:           color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out !default;
+
+//$form-check-transition:           null !default;
+//$form-check-input-active-filter:  brightness(90%) !default;
+//$form-select-transition:          $input-transition !default;
+
+//$input-transition:                border-color .15s ease-in-out, box-shadow .15s ease-in-out !default;
+
+//$nav-link-transition:             color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out !default;
+//$navbar-toggler-transition:       box-shadow .15s ease-in-out !default;
+//$navbar-toggler-transition:       box-shadow .15s ease-in-out !default;
+
+//$accordion-transition:            $btn-transition, border-radius .15s ease !default;
+//$progress-bar-transition:         width .6s ease !default;
+
+//$carousel-control-transition:     opacity .15s ease !default;
+//$carousel-indicator-transition:   opacity .6s ease !default;
+//$carousel-transition-duration:    .6s !default;
+//$carousel-transition:             transform $carousel-transition-duration ease-in-out !default; // Define transform transition first if using multiple transitions (e.g., `transform 2s ease, opacity .5s ease-out`)
+
+//$offcanvas-transition-duration:     .3s !default;
+$border-widths: (
+  1: 1px,
+  2: 2px,
+  3: 3px,
+  4: 4px,
+  5: 5px,
+  10: 10px,
+  20: 20px
+);
+$position-values: (
+  0: 0,
+  25: 25%,
+  50: 50%,
+  75: 75%,
+  100: 100%
+);
+@import "~bootstrap/scss/variables";
+//?$form-check-input-checked-bg-image:       url("data:image/svg+xml,<svg xmlns='https://www.w3.org/2000/svg' viewBox='0 0 20 20'><path fill='none' stroke='#{$form-check-input-checked-color}' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='m6 10 3 3 6-6'/></svg>");
+//?$form-check-radio-checked-bg-image:       url("data:image/svg+xml,<svg xmlns='https://www.w3.org/2000/svg' viewBox='-4 -4 8 8'><circle r='2' fill='#{$form-check-input-checked-color}'/></svg>");
+//?$form-check-input-indeterminate-bg-image: url("data:image/svg+xml,<svg xmlns='https://www.w3.org/2000/svg' viewBox='0 0 20 20'><path fill='none' stroke='#{$form-check-input-indeterminate-color}' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='M6 10h8'/></svg>");
+//?$form-switch-bg-image:         				    url("data:image/svg+xml,<svg xmlns='https://www.w3.org/2000/svg' viewBox='-4 -4 8 8'><circle r='3' fill='#{$form-switch-color}'/></svg>");
+//?$form-switch-focus-bg-image:      				url("data:image/svg+xml,<svg xmlns='https://www.w3.org/2000/svg' viewBox='-4 -4 8 8'><circle r='3' fill='#{$form-switch-focus-color}'/></svg>");
+//?$form-switch-checked-bg-image:    				url("data:image/svg+xml,<svg xmlns='https://www.w3.org/2000/svg' viewBox='-4 -4 8 8'><circle r='3' fill='#{$form-switch-checked-color}'/></svg>");
+//?$form-select-indicator:           				url("data:image/svg+xml,<svg xmlns='https://www.w3.org/2000/svg' viewBox='0 0 16 16'><path fill='none' stroke='#{$form-select-indicator-color}' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/></svg>");
+//?$form-feedback-icon-valid:          			url("data:image/svg+xml,<svg xmlns='https://www.w3.org/2000/svg' viewBox='0 0 8 8'><path fill='#{$form-feedback-icon-valid-color}' d='M2.3 6.73.6 4.53c-.4-1.04.46-1.4 1.1-.8l1.1 1.4 3.4-3.8c.6-.63 1.6-.27 1.2.7l-4 4.6c-.43.5-.8.4-1.1.1z'/></svg>");
+//?$form-feedback-icon-invalid:        			url("data:image/svg+xml,<svg xmlns='https://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='#{$form-feedback-icon-invalid-color}'><circle cx='6' cy='6' r='4.5'/><path stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/><circle cx='6' cy='8.2' r='.6' fill='#{$form-feedback-icon-invalid-color}' stroke='none'/></svg>");
+//?$navbar-light-toggler-icon-bg:      			url("data:image/svg+xml,<svg xmlns='https://www.w3.org/2000/svg' viewBox='0 0 30 30'><path stroke='#{$navbar-light-icon-color}' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/></svg>");
+//?$navbar-dark-toggler-icon-bg:       			url("data:image/svg+xml,<svg xmlns='https://www.w3.org/2000/svg' viewBox='0 0 30 30'><path stroke='#{$navbar-dark-icon-color}' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/></svg>");
+//?$accordion-button-icon:         					url("data:image/svg+xml,<svg xmlns='https://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='#{$accordion-icon-color}' stroke-linecap='round' stroke-linejoin='round'><path d='M2 5L8 11L14 5'/></svg>");
+//?$accordion-button-active-icon:  					url("data:image/svg+xml,<svg xmlns='https://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='#{$accordion-icon-active-color}' stroke-linecap='round' stroke-linejoin='round'><path d='M2 5L8 11L14 5'/></svg>");
+//?$carousel-control-prev-icon-bg:     			url("data:image/svg+xml,<svg xmlns='https://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='#{$carousel-control-color}'><path d='M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z'/></svg>");
+//?$carousel-control-next-icon-bg:     			url("data:image/svg+xml,<svg xmlns='https://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='#{$carousel-control-color}'><path d='M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z'/></svg>");
+//?$btn-close-bg:               							url("data:image/svg+xml,<svg xmlns='https://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='#{$btn-close-color}'><path d='M.293.293a1 1 0 0 1 1.414 0L8 6.586 14.293.293a1 1 0 1 1 1.414 1.414L9.414 8l6.293 6.293a1 1 0 0 1-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 0 1-1.414-1.414L6.586 8 .293 1.707a1 1 0 0 1 0-1.414z'/></svg>");
+@import "~bootstrap/scss/variables-dark";
+//?$form-select-indicator-dark:			        url("data:image/svg+xml,<svg xmlns='https://www.w3.org/2000/svg' viewBox='0 0 16 16'><path fill='none' stroke='#{$form-select-indicator-color-dark}' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/></svg>");
+//?$form-switch-bg-image-dark: 			        url("data:image/svg+xml,<svg xmlns='https://www.w3.org/2000/svg' viewBox='-4 -4 8 8'><circle r='3' fill='#{$form-switch-color-dark}'/></svg>");
+//?$accordion-button-icon-dark:         			url("data:image/svg+xml,<svg xmlns='https://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='#{$accordion-icon-color-dark}'><path fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/></svg>");
+//?$accordion-button-active-icon-dark:  			url("data:image/svg+xml,<svg xmlns='https://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='#{$accordion-icon-active-color-dark}'><path fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/></svg>");
+
+@import "~bootstrap/scss/maps";
+@import "~bootstrap/scss/mixins";
+@import "~bootstrap/scss/utilities";
+
+$utilities: map-merge(
+  $utilities,
+  (
+    "cursor": (
+      property: cursor,
+      class: cursor,
+      values: auto pointer grab grabbing move,
+    ),
+		"max-width": (
+      property: max-width,
+      class: mw,
+      values: (
+				10: 10%,
+        25: 25%,
+        50: 50%,
+        75: 75%,
+        100: 100%
+      )
+    ),
+    "viewport-width": (
+      property: width,
+      class: vw,
+      values: (
+				10: 10vw,
+        25: 25vw,
+        50: 50vw,
+        75: 75vw,
+        100: 100vw
+      )
+    ),
+    "min-viewport-width": (
+      property: min-width,
+      class: min-vw,
+      values: (
+				10: 10vw,
+        25: 25vw,
+        50: 50vw,
+        75: 75vw,
+				90: 92vw,
+        100: 100vw
+      )
+    ),
+    "max-height": (
+      property: max-height,
+      class: mh,
+      values: (
+				10: 10%,
+        25: 25%,
+        50: 50%,
+        75: 75%,
+        100: 100%
+      )
+    ),
+    "viewport-height": (
+      property: height,
+      class: vh,
+      values: (
+				10: 10vh,
+        25: 25vh,
+        50: 50vh,
+        75: 75vh,
+        100: 100vh
+      )
+    ),
+    "min-viewport-height": (
+      property: min-height,
+      class: min-vh,
+      values: (
+				10: 10vh,
+        25: 25vh,
+        50: 50vh,
+        75: 75vh,
+        90: 90vh,
+        100: 100vh
+      )
+    ),
+		"shadow": (
+      property: box-shadow,
+      class: shadow,
+      values: (
+        none: none,
+        null: var(--#{$prefix}box-shadow),
+        sm: var(--#{$prefix}box-shadow-sm),
+        lg: var(--#{$prefix}box-shadow-lg),
+        sm-w: 0 .125rem .25rem rgba($white, .075),
+        lg-w: 0 1rem 3rem rgba($white, .175),
+        sm-w-in: inset 0 .125rem .25rem rgba($white, .075),
+        lg-w-in: inset 0 1rem 3rem rgba($white, .175),
+				sm-b-in: inset var(--#{$prefix}box-shadow-sm),
+        lg-b-in: inset var(--#{$prefix}box-shadow-lg),
+        xl-b-in: inset 0 0 1.25rem rgba(0,0,0,.5),
+        xl-w-in: inset 0 0 1.25rem rgba(255,255,255,.5),
+      )
+    )
+  )
+);
+
+
+// Layout & components
+@import "~bootstrap/scss/root";
+@import "~bootstrap/scss/reboot";
+@import "~bootstrap/scss/type";
+@import "~bootstrap/scss/images";
+@import "~bootstrap/scss/containers";
+@import "~bootstrap/scss/grid";
+@import "~bootstrap/scss/tables";
+@import "~bootstrap/scss/forms";
+@import "~bootstrap/scss/buttons";
+@import "~bootstrap/scss/transitions";
+@import "~bootstrap/scss/dropdown";
+@import "~bootstrap/scss/button-group";
+@import "~bootstrap/scss/nav";
+@import "~bootstrap/scss/navbar";
+@import "~bootstrap/scss/card";
+@import "~bootstrap/scss/accordion";
+@import "~bootstrap/scss/breadcrumb";
+@import "~bootstrap/scss/pagination";
+@import "~bootstrap/scss/badge";
+@import "~bootstrap/scss/alert";
+@import "~bootstrap/scss/progress";
+@import "~bootstrap/scss/list-group";
+@import "~bootstrap/scss/close";
+@import "~bootstrap/scss/toasts";
+@import "~bootstrap/scss/modal";
+@import "~bootstrap/scss/tooltip";
+@import "~bootstrap/scss/popover";
+@import "~bootstrap/scss/carousel";
+@import "~bootstrap/scss/spinners";
+@import "~bootstrap/scss/offcanvas";
+@import "~bootstrap/scss/placeholders";
+
+// Helpers
+@import "~bootstrap/scss/helpers";
+
+// Utilities
+@import "~bootstrap/scss/utilities/api";
+// scss-docs-end import-stack
+
+@import '~@tkrotoff/bootstrap-floating-label/src/bootstrap-floating-label';
+
+//@import '../vendors/bootstrap5-tags/tags';
+//@import '~use-bootstrap-select/scss/use-bootstrap-select.scss';
+//@import '../vendors/vanillajs-datepicker/sass/datepicker-bs5.scss';
+
+
+//! / copied from node_modules\@davicotico\menu-editor
+.jme-handle {cursor: grabbing;cursor: -webkit-grabbing;}
+.ghost {opacity: 0.5; background-color: #48c18a;}
+.chosen {color: #fff;background-color: #c00;}
+.list-group-item {padding-right: 0px;}
+.list-group-item > .list-group > .list-group-item:first-child {margin-top: 8px;}
+//! /end copy from node_modules\@davicotico\menu-editor
+
+/*//! Nav Scroller - from the bs5 blog example
+ *	https://getbootstrap.com/docs/5.3/examples/blog/
+ * @do ~Makes mobile nav left/right scrollable~
+ */
+ .nav-scroller {
+	position: relative;
+	z-index: 2;
+	height: 2.75rem;
+	//overflow-y: hidden;
+}
+
+.nav-scroller .nav {
+	display: flex;
+	flex-wrap: nowrap;
+	padding-bottom: 1rem;
+	margin-top: -1px;
+	overflow-x: auto;
+	text-align: center;
+	white-space: nowrap;
+	-webkit-overflow-scrolling: touch;
+}
+/***********************************/
+
+//! ! Start Sortables
+//.sortable-ghost {}
+//.sortable-chosen {}
+.sortable-drag {cursor: grabbing;}
+//! /end Sortables
+//! !! Create Class Script start
+.list-group-item.active {
+	z-index: 2;
+	color: var(--bs-dark-text-emphasis0);
+	background-color: var(--bs-primary-border-subtle);
+	border-color: var(--bs-tertiary-bg);
+}
+[data-bs-theme="dark"] {
+	& .table-warning {
+		--bs-table-color:var(--bs-secondary-text-emphasis); /*var(--bs-dark-text-emphasis);*/
+		--bs-table-bg:var(--bs-secondary-bg-subtle); /*var(--bs-secondary-border-subtle);*/
+		--bs-table-border-color:var(--bs-dark-border-subtle); /*var(--bs-emphasis-color);*/
+		--bs-table-hover-bg:var(--bs-dark-bg-subtle); /*var(--bs-dark-border-subtle);*/
+		--bs-table-hover-color:var(--bs-dark-text-emphasis); /*var(--bs-dark-text-emphasis);*/
+		border-color: var(--bs-table-border-color);
+	}
+}
+.yohns-tip {
+	--bs-tooltip-bg: var(--bs-primary-bg-subtle);
+	--bs-tooltip-color: var(--bs-white);
+}
+textarea, pre {
+	-moz-tab-size : 4;
+		-o-tab-size : 4;
+			 tab-size : 4;
+}
+::-moz-selection {
+	background: #ff08d3;
+	color: #000;
+}
+
+::selection {
+	background: #ff08d3;
+	color: #000;
+}
+* {
+	scrollbar-color: #6e9dd4 #ff08d3 ;
+	scrollbar-gutter: stable;
+	scrollbar-width: thin;
+}
+.yo-left-scroll {
+	transform: scaleX(-1);
+	overflow-y: auto;
+	max-height: 800px;
+	scrollbar-color: #639dd4 #333;
+}
+.yo-left-scroll > div {
+	transform: scaleX(-1);
+}
+//! !! Create Class Script end
+
+// !! Custom offcanvas animation
+@keyframes bounceInLeft {
+  from,
+  60%,
+  75%,
+  90%,
+  to {
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+  }
+
+  0% {
+    opacity: 0;
+    transform: translate3d(-3000px, 0, 0) scaleX(3);
+  }
+
+  60% {
+    opacity: 1;
+    transform: translate3d(25px, 0, 0) scaleX(1);
+  }
+
+  75% {
+    transform: translate3d(-10px, 0, 0) scaleX(0.98);
+  }
+
+  90% {
+    transform: translate3d(5px, 0, 0) scaleX(0.995);
+  }
+
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+@keyframes bounceOut {
+  20% {
+    transform: scale3d(0.9, 0.9, 0.9);
+  }
+
+  50%,
+  55% {
+    opacity: 1;
+    transform: scale3d(1.1, 1.1, 1.1);
+  }
+
+  to {
+    opacity: 0;
+    transform: scale3d(0.3, 0.3, 0.3);
+  }
+}
+
+.offcanvas.show {
+  animation: bounceInLeft 0.3s forwards; /* Opening animation */
+}
+
+.offcanvas:not(.show) {
+  animation: bounceOut 0.3s forwards; /* Closing animation */
+}
+
+/* Set the size for all SVGs in the navbar */
+.navbar svg {
+	width: 1.5rem; /* Adjust to your preferred size */
+	height: 1.5rem
+}
+
+
+/********************************
+	AI Chat Bot
+*********************************/
+
+.chat-container {
+	height: calc(100vh - 80px);
+	display: flex;
+	flex-direction: column;
+}
+.card-body {
+	display: flex;
+	flex-direction: column;
+	padding: 1rem;
+	gap: 1rem;
+	height: 100%;
+}
+.chat-messages {
+	flex: 1;
+	min-height: 0;  /* Important for proper flexbox scrolling */
+}
+.input-area {
+	flex-shrink: 0;  /* Prevents the input area from shrinking */
+}
+form textarea {
+	resize: none;
+	min-height: 38px;  /* Height of a single line */
+	max-height: 40vh;
+}
+.settings-container {
+	height: calc(100vh - 80px);
+}
+.input-group.color-sides > .form-control.form-range {
+	width: 70%;
+	height: inherit;
+}
+.input-group.color-sides > .form-control:focus,
+.input-group.color-sides > .form-control.form-range:focus {
+	border: var(--bs-border-width) solid var(--bs-border-color);
+	box-shadow: none !important;
+}
+.row [class*='col-'] {
+  transition: all 400ms ease;
+}
+/* Colors taken from the Obsidian Rainbow folder colors thing I got
+$color00: #e22c3c; //--red
+$color01: #e9404b; //--red-orange
+$color02: #ee6748; //--orange
+$color03: #fa9f50; //--amber
+$color04: #ffd85e; //--yellow
+$color05: #97e768; //--lime
+$color06: #52eea3; //--mint
+$color07: #51e1e9; //--cyan
+$color08: #43cfea; //--cool-cyan
+$color09: #54b6f8; //--light-blue
+$color10: #437cf3; //--blue
+$color11: #6f51f4; //--blue-violet
+$color12: #9446f8; //--violet
+$color13: #c952ed; //--purple
+$color14: #e54f9b; //--magenta
+$color15: #e3365e; //--hot-red
+*/

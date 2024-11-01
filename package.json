@@ -1,0 +1,68 @@
+{
+	"name": "yohns-ai-chat-bot",
+	"description": "Yohns custom AI chat bot",
+	"version": "0.0.1",
+	"type": "module",
+	"main": "server.js",
+	"scripts": {
+		"start": "node server.js",
+		"copyFiles": "copy-files-from-to",
+		"check": "ncu -u"
+	},
+	"yohns-descriptions": {
+		"scripts": {
+			"start": "starts the server to be accessible via the browser",
+			"copyFiles": [
+				"copies files from node-modules to corisponding paths",
+				"requires copy-files-from-to to be installed globally",
+				"@source: https://www.npmjs.com/package/copy-files-from-to"
+			],
+			"check": "checks for npm updates"
+		}
+	},
+	"dependencies": {
+		"@tkrotoff/bootstrap-floating-label": "^0.12",
+		"bootstrap": "^5.3",
+		"bootstrap-icons": "^1.11",
+		"dotenv": "^16.4",
+		"edit-json-file": "^1.8",
+		"ejs": "^3.1",
+		"express": "^4.21",
+		"npm-check-updates": "^17.1",
+		"openai": "^4.69"
+	},
+	"browserslist": [
+		"defaults"
+	],
+	"devDependencies": {
+		"@eslint/js": "^9.12.0",
+		"eslint": "^9.12.0",
+		"globals": "^15.10.0"
+	},
+	"copyFiles": [
+		{
+			"from": "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
+			"to": "www/assets/js/bootstrap.bundle.min.js"
+		},
+		{
+			"from": "node_modules/bootstrap-icons/font/fonts/*",
+			"to": "www/assets/fonts"
+		}
+	],
+	"copyFilesSettings": {
+		"whenFileExists": "notify-about-available-change",
+		"addReferenceToSourceOfOrigin": true,
+		"ignoreDotFilesAndFolders": true,
+		"removeSourceMappingURL": true,
+		"minifyJs": false,
+		"minifyJsTerserOptions": {
+			"compress": {
+				"sequences": false
+			},
+			"mangle": false,
+			"format": {
+				"semicolons": false
+			}
+		}
+	}
+}
