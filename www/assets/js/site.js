@@ -96,10 +96,13 @@ document.addEventListener("DOMContentLoaded", function () {
 			// Render Markdown to HTML using marked.js
 			const atChat = marked.parse(result.aiResp);
 			const aiDiv = createMsg('ai', atChat);
-			//const newDiv = document.createElement('div');
-			//newDiv.classList.add('border','rounded','p-2','mb-2','ai-chat','bg-body-tertiary');
-			//newDiv.innerHTML = atChat
 			chatBox.insertBefore(aiDiv, resp);
+
+			// Highlight each code block inside the container
+			chatBox.querySelectorAll('pre code').forEach((block) => {
+				hljs.highlightElement(block);
+			});
+
 			loading.classList.add('d-none')
 		} catch (error) {
 			console.error('Error:', error);
