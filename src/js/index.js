@@ -4,4 +4,5 @@
 //import './bootstrap.bundle.min.cjs';
 import './dselect.js';
 import './TextWave.js';
+import './AutoResizer.js';
 import './site.js';

@@ -9,7 +9,7 @@ let DBprompts = new JsonDB(new Config("data/JDB/saved-prompts", true, false, '/'
 let DBchats = new JsonDB(new Config("data/JDB/chats", true, false, '/'));
 let DBconfig = new JsonDB(new Config("data/JDB/config", true, false, '/'));
 //- filename: string, //saveOnPush?: boolean, //prettyPrint?: boolean, //separator?: string, //syncOnSave?: boolean
-//? Config(  ^^ options ^^ ) --------------------------- ^^ -------------------- ^^ ------------- ^^
+//? Config( ^^ options ^^ ) --------------------------- ^^ -------------------- ^^ ------------- ^^
 
 const token = process.env.GITHUB_TOKEN;
 const endpoint = "https://models.inference.ai.azure.com";

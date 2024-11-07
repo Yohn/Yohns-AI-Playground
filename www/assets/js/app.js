@@ -148,11 +148,11 @@
         } else {
           for (const option2 of selectedOptions) {
             tag.push(`
-            <div class="${classTag}" data-dselect-value="${option2.value}">
-              ${option2.text}
-              <svg onclick="dselectRemoveTag(this, '${classElement}', '${classToggler}')" class="${classTagRemove}" width="14" height="14" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm5 13.59L15.59 17 12 13.41 8.41 17 7 15.59 10.59 12 7 8.41 8.41 7 12 10.59 15.59 7 17 8.41 13.41 12 17 15.59z"/></svg>
-            </div>
-          `);
+						<div class="${classTag}" data-dselect-value="${option2.value}">
+							${option2.text}
+							<svg onclick="dselectRemoveTag(this, '${classElement}', '${classToggler}')" class="${classTagRemove}" width="14" height="14" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm5 13.59L15.59 17 12 13.41 8.41 17 7 15.59 10.59 12 7 8.41 8.41 7 12 10.59 15.59 7 17 8.41 13.41 12 17 15.59z"/></svg>
+						</div>
+					`);
           }
         }
         return tag.join("");
@@ -193,13 +193,13 @@
               imgSize = "1.2rem";
             }
             text = `<span class="d-flex align-items-center">
-            <img src="${img}" style="max-height:${imgSize}; width:auto;">
-            <span class="ps-2">${text}</span>
-          </span>`;
+						<img src="${img}" style="max-height:${imgSize}; width:auto;">
+						<span class="ps-2">${text}</span>
+					</span>`;
           }
-          items.push(`<button${hidden} class="dropdown-item${active}${btnClass}"  ${disableitem} data-dselect-value="${value}" type="button" onclick="dselectUpdate(this, '${classElement}', '${classToggler}')" ${disabled}>
-          ${text}
-        </button>`);
+          items.push(`<button${hidden} class="dropdown-item${active}${btnClass}"	${disableitem} data-dselect-value="${value}" type="button" onclick="dselectUpdate(this, '${classElement}', '${classToggler}')" ${disabled}>
+					${text}
+				</button>`);
         }
       }
       items = items.join("");
@@ -211,30 +211,30 @@
         return className !== "form-select" && className !== "form-select-sm" && className !== "form-select-lg";
       }).join(" ");
       const clearBtn = clearable && !el.multiple ? `
-    <button type="button" class="btn ${classClearBtn}" title="Clear selection" onclick="dselectClear(this, '${classElement}')">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 14" fill="none">
-        <path d="M13 1L0.999999 13" stroke-width="2" stroke="currentColor"></path>
-        <path d="M1 1L13 13" stroke-width="2" stroke="currentColor"></path>
-      </svg>
-    </button>
-    ` : "";
+		<button type="button" class="btn ${classClearBtn}" title="Clear selection" onclick="dselectClear(this, '${classElement}')">
+			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 14" fill="none">
+				<path d="M13 1L0.999999 13" stroke-width="2" stroke="currentColor"></path>
+				<path d="M1 1L13 13" stroke-width="2" stroke="currentColor"></path>
+			</svg>
+		</button>
+		` : "";
       const template = `
-    <div class="dropdown ${classElement} ${additionalClass}">
-      <button class="${classToggler} ${!el.multiple && clearable ? classTogglerClearable : ""}" data-dselect-text="${!el.multiple && selectedText(el.options)}" type="button" data-bs-toggle="dropdown" aria-expanded="false"${autoclose}>
-        ${selectedTag(el.options, el.multiple)}
-      </button>
-      <div class="dropdown-menu">
-        <div class="d-flex flex-column">
-          ${searchInput}
-          <div class="dselect-items" style="max-height:${maxHeight};overflow:auto">
-            ${itemTags(el.querySelectorAll("*"))}
-          </div>
-          <div class="${classNoResults} d-none">${noResultsPlaceholder}</div>
-        </div>
-      </div>
-      ${clearBtn}
-    </div>
-    `;
+		<div class="dropdown ${classElement} ${additionalClass}">
+			<button class="${classToggler} ${!el.multiple && clearable ? classTogglerClearable : ""}" data-dselect-text="${!el.multiple && selectedText(el.options)}" type="button" data-bs-toggle="dropdown" aria-expanded="false"${autoclose}>
+				${selectedTag(el.options, el.multiple)}
+			</button>
+			<div class="dropdown-menu">
+				<div class="d-flex flex-column">
+					${searchInput}
+					<div class="dselect-items" style="max-height:${maxHeight};overflow:auto">
+						${itemTags(el.querySelectorAll("*"))}
+					</div>
+					<div class="${classNoResults} d-none">${noResultsPlaceholder}</div>
+				</div>
+			</div>
+			${clearBtn}
+		</div>
+		`;
       removePrev();
       el.insertAdjacentHTML("afterend", template);
       const dropdownElement = el.nextElementSibling;
@@ -318,13 +318,19 @@
     const data = await response.json();
     console.log("prompts");
     console.log(data);
-    Object.entries(await data).forEach(([key, value]) => {
-      const option = document.createElement("option");
-      option.value = key;
-      option.text = key;
-      selectPrompt.appendChild(option);
-      loadedPrompts[key] = value;
-    });
+    for (const category in data) {
+      const optgroup = document.createElement("optgroup");
+      optgroup.label = category;
+      loadedPrompts[category] = {};
+      for (const key in data[category]) {
+        const option = document.createElement("option");
+        option.text = key;
+        option.value = key;
+        optgroup.appendChild(option);
+        loadedPrompts[category][key] = data[category][key];
+      }
+      selectElement.appendChild(optgroup);
+    }
     dselect(selectPrompt);
     return selectPrompt;
   }
@@ -386,7 +392,9 @@
     });
     loadSelects(promptSelect, modelSelect);
     promptSelect.addEventListener("change", async (e) => {
-      systemPrompt.value = loadedPrompts[e.target.value];
+      const selectedOption = e.target.options[e.target.selectedIndex];
+      const optgroupLabel = selectedOption.parentNode.label;
+      systemPrompt.value = loadedPrompts[optgroupLabel][e.target.value];
     });
     modelSelect.addEventListener("change", async (e) => {
       modelLabel.innerHTML = `<img style="height:23px; width:auto;" src="${loadedModels[modelSelect.value].img}" alt="Model">`;

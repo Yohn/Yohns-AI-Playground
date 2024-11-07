@@ -1,12 +1,12 @@
 const { src, dest, watch, series, parallel } = require('gulp')
-const fs       = require('fs-extra')
-const util     = require('util')
-const path     = require('path')
-const exec     = util.promisify(require('child_process').exec)
-const rename   = require('gulp-rename')
+const fs			 = require('fs-extra')
+const util		 = require('util')
+const path		 = require('path')
+const exec		 = util.promisify(require('child_process').exec)
+const rename	 = require('gulp-rename')
 const concat 	 = require('gulp-concat');
-const esbuild  = require('esbuild')
-const through  = require('through2')
+const esbuild	= require('esbuild')
+const through	= require('through2')
 
 //import { src, dest, watch, series, parallel } from 'gulp';
 //import fs from 'fs-extra';
@@ -38,12 +38,12 @@ let filtered_css = []
  * @returns {Promise}
  */
 function clean() {
-  return new Promise(function (resolve) {
-    for (const [key, value] of Object.entries(compiled)) {
-      fs.emptyDirSync(value)
-    }
-    resolve()
-  })
+	return new Promise(function (resolve) {
+		for (const [key, value] of Object.entries(compiled)) {
+			fs.emptyDirSync(value)
+		}
+		resolve()
+	})
 }
 
 /**
@@ -60,20 +60,20 @@ function clean() {
  * @returns {Promise}
  */
 function css() {
-  return new Promise(async function (resolve) {
-    if (filtered_css.length) {
-      for (const file of filtered_css) {
-        const dest = file.replace(
-          path.join(__dirname, source.css),
-          path.join(__dirname, compiled.css)
-        ).slice(0, -4) + 'css'
-        await exec(`sass --source-map --embed-sources ${file} ${dest} --quiet`).catch(err => console.log(err.stderr))
-      }
-    } else {
-      await exec(`sass --source-map --embed-sources ${source.css}:${compiled.css} --quiet`).catch(err => console.log(err.stderr))
-    }
-    resolve()
-  })
+	return new Promise(async function (resolve) {
+		if (filtered_css.length) {
+			for (const file of filtered_css) {
+				const dest = file.replace(
+					path.join(__dirname, source.css),
+					path.join(__dirname, compiled.css)
+				).slice(0, -4) + 'css'
+				await exec(`sass --source-map --embed-sources ${file} ${dest} --quiet`).catch(err => console.log(err.stderr))
+			}
+		} else {
+			await exec(`sass --source-map --embed-sources ${source.css}:${compiled.css} --quiet`).catch(err => console.log(err.stderr))
+		}
+		resolve()
+	})
 }
 
 /**
@@ -91,41 +91,41 @@ function css() {
  * watch is set up.
  */
 function css_watch() {
-  watch(source.css).on('all', async function (event, target) {
-    const obj = path.parse(target)
-    let targets = []
-    switch (event) {
-      case 'add':
-      case 'change':
-        if (obj.name.startsWith('_')) {
-          await new Promise(async function (resolve) {
-            src(`${source.css}/**/!(_*).scss`)
-              .pipe(through.obj(function (file, enc, callback) {
-                const content = file.contents.toString().split(/\r?\n/).filter(i => i.startsWith('@import')).join('')
-                if (content.includes(`${obj.name.substring(1)}'`) || content.includes(`${obj.name.substring(1)}"`)) {
-                  targets.push(file.path)
-                }
-                return callback()
-              }))
-              .on('finish', resolve)
-          })
-        } else if (obj.ext === '.scss') {
-          targets.push(path.join(__dirname, obj.dir, obj.base))
-        }
-        break;
-      case 'unlink':
-        const removedTarget = path.join(__dirname, target).replace(
-          path.join(__dirname, source.css),
-          path.join(__dirname, compiled.css),
-        ).slice(0, -4) + 'css'
-        fs.removeSync(removedTarget)
-        fs.removeSync(removedTarget + '.map')
-        fs.removeSync(removedTarget.slice(0, -3) + 'min.css')
-        break;
-    }
-    filtered_css = targets
-  })
-  return watch(source.css, css)
+	watch(source.css).on('all', async function (event, target) {
+		const obj = path.parse(target)
+		let targets = []
+		switch (event) {
+			case 'add':
+			case 'change':
+				if (obj.name.startsWith('_')) {
+					await new Promise(async function (resolve) {
+						src(`${source.css}/**/!(_*).scss`)
+							.pipe(through.obj(function (file, enc, callback) {
+								const content = file.contents.toString().split(/\r?\n/).filter(i => i.startsWith('@import')).join('')
+								if (content.includes(`${obj.name.substring(1)}'`) || content.includes(`${obj.name.substring(1)}"`)) {
+									targets.push(file.path)
+								}
+								return callback()
+							}))
+							.on('finish', resolve)
+					})
+				} else if (obj.ext === '.scss') {
+					targets.push(path.join(__dirname, obj.dir, obj.base))
+				}
+				break;
+			case 'unlink':
+				const removedTarget = path.join(__dirname, target).replace(
+					path.join(__dirname, source.css),
+					path.join(__dirname, compiled.css),
+				).slice(0, -4) + 'css'
+				fs.removeSync(removedTarget)
+				fs.removeSync(removedTarget + '.map')
+				fs.removeSync(removedTarget.slice(0, -3) + 'min.css')
+				break;
+		}
+		filtered_css = targets
+	})
+	return watch(source.css, css)
 }
 
 /**
@@ -139,10 +139,10 @@ function css_watch() {
  * @returns {Promise} A promise that resolves when the prefixing process is complete.
  */
 function css_prefix() {
-  return new Promise(async function (resolve) {
-    await exec(`npx postcss ${compiled.css}/*.css !${compiled.css}/*.min.css --use autoprefixer --map --replace`).catch(err => console.log(err.stderr))
-    resolve()
-  })
+	return new Promise(async function (resolve) {
+		await exec(`npx postcss ${compiled.css}/*.css !${compiled.css}/*.min.css --use autoprefixer --map --replace`).catch(err => console.log(err.stderr))
+		resolve()
+	})
 }
 
 /**
@@ -156,19 +156,19 @@ function css_prefix() {
  * @returns {Stream} A stream that handles the minification process.
  */
 function css_minify() {
-  return src(`${compiled.css}/!(*.min).css`)
-    .pipe(through.obj(function (file, enc, callback) {
-      let content = file.contents.toString()
-      content = esbuild.transformSync(content, {
-        loader: 'css',
-        minify: true,
-      }).code
-      file.contents = Buffer.from(content)
-      this.push(file)
-      return callback()
-    }))
-    .pipe(rename({ suffix: '.min' }))
-    .pipe(dest(compiled.css))
+	return src(`${compiled.css}/!(*.min).css`)
+		.pipe(through.obj(function (file, enc, callback) {
+			let content = file.contents.toString()
+			content = esbuild.transformSync(content, {
+				loader: 'css',
+				minify: true,
+			}).code
+			file.contents = Buffer.from(content)
+			this.push(file)
+			return callback()
+		}))
+		.pipe(rename({ suffix: '.min' }))
+		.pipe(dest(compiled.css))
 }
 
 /**
@@ -179,19 +179,19 @@ function css_minify() {
  * @returns {Promise<void>} A promise that resolves when the JavaScript processing is complete.
  */
 async function js() {
-  await esbuild.build({
-    entryPoints: [
-      path.resolve('src/js/index.js'), // or use source.js if defined globally
-    ],
-    outfile: path.resolve('www/assets/js/app.js'),
-    //minify: true,
+	await esbuild.build({
+		entryPoints: [
+			path.resolve('src/js/index.js'), // or use source.js if defined globally
+		],
+		outfile: path.resolve('www/assets/js/app.js'),
+		//minify: true,
 		allowOverwrite: true,
-    bundle: true,
-    treeShaking: false, // Include all code
-    target: ['esnext'],
-    sourcemap: true,
-    write: true, // Write the output to disk
-  });
+		bundle: true,
+		treeShaking: false, // Include all code
+		target: ['esnext'],
+		sourcemap: true,
+		write: true, // Write the output to disk
+	});
 }
 
 /**
@@ -202,31 +202,31 @@ async function js() {
  * @returns {void}
  */
 function js_watch() {
-  watch(`${source.js}/**/*.js`, async function (event, target) {
-    const obj = path.parse(target);
+	watch(`${source.js}/**/*.js`, async function (event, target) {
+		const obj = path.parse(target);
 
-    switch (event) {
-      case 'add':
-      case 'change':
-        if (obj.ext === '.js') {
-          // Simply calling js() here will re-bundle everything, including all dependencies of index.js
-          await js();
-        }
-        break;
-      case 'unlink':
-        const removedTarget = path.join(__dirname, target).replace(
-          path.join(__dirname, source.js),
-          path.join(__dirname, compiled.js)
-        );
-        fs.removeSync(removedTarget);
-        fs.removeSync(removedTarget.slice(0, -2) + 'min.js');
-        break;
-    }
-    filtered_js = targets;
+		switch (event) {
+			case 'add':
+			case 'change':
+				if (obj.ext === '.js') {
+					// Simply calling js() here will re-bundle everything, including all dependencies of index.js
+					await js();
+				}
+				break;
+			case 'unlink':
+				const removedTarget = path.join(__dirname, target).replace(
+					path.join(__dirname, source.js),
+					path.join(__dirname, compiled.js)
+				);
+				fs.removeSync(removedTarget);
+				fs.removeSync(removedTarget.slice(0, -2) + 'min.js');
+				break;
+		}
+		filtered_js = targets;
 
-    // Trigger the js function to re-bundle
-    await js();
-  });
+		// Trigger the js function to re-bundle
+		await js();
+	});
 }
 
 /**
@@ -236,18 +236,18 @@ function js_watch() {
  * @returns {Promise<void>} A promise that resolves when the minification is done.
  */
 async function js_minify() {
-  await esbuild.build({
-    entryPoints: [
-      path.resolve('src/js/index.js'), // or use source.js if defined globally
-    ],
-    //outfile: path.resolve('www/assets/js/app.js'),
-    //entryPoints: [`${compiled.js}/**/*.js`],
-    outfile: path.resolve('www/assets/js/app.min.js'),
-    //outdir: compiled.js,
-    minify: true,
-    bundle: true,
+	await esbuild.build({
+		entryPoints: [
+			path.resolve('src/js/index.js'), // or use source.js if defined globally
+		],
+		//outfile: path.resolve('www/assets/js/app.js'),
+		//entryPoints: [`${compiled.js}/**/*.js`],
+		outfile: path.resolve('www/assets/js/app.min.js'),
+		//outdir: compiled.js,
+		minify: true,
+		bundle: true,
 		allowOverwrite: true,
-  });
+	});
 }
 
 /**
@@ -262,26 +262,26 @@ async function js_minify() {
  * @returns {boolean} `true` if the item should be processed; `false` otherwise.
  */
 function pass(item, items) {
-  if (items.length === 0) {
-    return true
-  } else {
-    return items.includes(item)
-  }
+	if (items.length === 0) {
+		return true
+	} else {
+		return items.includes(item)
+	}
 }
 
-exports.css        = css
-exports.css_watch  = css_watch
+exports.css				= css
+exports.css_watch	= css_watch
 exports.css_prefix = css_prefix
 exports.css_minify = css_minify
-exports.js         = js
-exports.js_watch   = js_watch
-exports.js_minify  = js_minify
+exports.js				 = js
+exports.js_watch	 = js_watch
+exports.js_minify	= js_minify
 
 exports.dev = parallel(css_watch, js_watch)
 exports.build = series(
-  clean,
+	clean,
 	parallel(
-    series(css, css_prefix, css_minify),
-    series(js, js_minify),
-  )
+		series(css, css_prefix, css_minify),
+		series(js, js_minify),
+	)
 )

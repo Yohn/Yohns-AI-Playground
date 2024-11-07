@@ -16,7 +16,7 @@
 		"dev": [
 			"Compiles js and scss files when edited. For the js files,",
 			"any files you want to compile and min, make sure to add to the src/js/index.js ",
-			"file cause thats the only file that  gets compiled."
+			"file cause thats the only file that gets compiled."
 		],
 		"build": "builds the min css and js files from the src directory.",
 		"start": "starts the server to be accessible via the browser",

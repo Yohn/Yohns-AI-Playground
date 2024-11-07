@@ -73,9 +73,9 @@
 	},
 	"Llama-3.2-90B-Vision-Instruct": {
 		"model": "Llama-3.2-90B-Vision-Instruct",
-    "temperature": 0.8,
-    "max_tokens": 2048,
-    "top_p": 0.1,
+		"temperature": 0.8,
+		"max_tokens": 2048,
+		"top_p": 0.1,
 		"name": "Llama-3.2-90B-Vision-Instruct",
 		"endpoint":"https://models.inference.ai.azure.com",
 		"img": "https://github.com/images/modules/marketplace/models/families/meta.svg?size=40"

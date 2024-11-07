@@ -61,13 +61,29 @@ async function loadPrompts(selectPrompt){
 	const data = await response.json()
 	console.log('prompts')
 	console.log(data)
-  Object.entries(await data).forEach(([key, value]) => {
-    const option = document.createElement('option');
-    option.value = key;
-    option.text = key;
-    selectPrompt.appendChild(option);
-		loadedPrompts[key] = value;
-  })
+	for (const category in data) {
+		// Create an optgroup element for each category
+		const optgroup = document.createElement('optgroup');
+		optgroup.label = category;
+		loadedPrompts[category] = {}
+		// Iterate through the keys in the current category object
+		for (const key in data[category]) {
+			// Create an option element for each key-value pair
+			const option = document.createElement('option');
+			option.text = key;
+			option.value = key; // data[category][key];
+			optgroup.appendChild(option);
+			loadedPrompts[category][key] = data[category][key];
+		}
+		selectElement.appendChild(optgroup);
+	}
+	//Object.entries(await data).forEach(([key, value]) => {
+	//	const option = document.createElement('option');
+	//	option.value = key;
+	//	option.text = key;
+	//	selectPrompt.appendChild(option);
+	//	loadedPrompts[key] = value;
+	//})
 	dselect(selectPrompt)
 	return selectPrompt
 }
@@ -77,19 +93,19 @@ async function loadModels(selectModel){
 	const response = await fetch('assets/data/models.json')
 	const data = await response.json()
 	Object.entries(data).forEach(([key, value]) => {
-    const option = document.createElement('option');
-    option.value = key;
-    option.text = value.name
+		const option = document.createElement('option');
+		option.value = key;
+		option.text = value.name
 		option.setAttribute('data-dselect-img', value.img);
-    selectModel.appendChild(option);
+		selectModel.appendChild(option);
 		loadedModels[key] = value;
-  })
+	})
 	dselect(selectModel)
 	return selectModel
 }
 
 //Object.keys(data).forEach(key => {
-//  console.log(data[key].name);
+//	console.log(data[key].name);
 //});
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -108,6 +124,10 @@ document.addEventListener("DOMContentLoaded", function () {
 		toDoList = document.getElementById('to-do-list'),
 		toDoBtn = document.getElementById('to-do-btn'),
 		mainChat = document.getElementById('main-chat');
+
+	document.querySelectorAll('textarea.auto-grow').forEach(textarea => {
+		new AutoResizer(textarea, { maxHeight: 400 });
+	});
 
 	chatForm.addEventListener("submit", async (e) => {
 		e.preventDefault();
@@ -164,7 +184,10 @@ document.addEventListener("DOMContentLoaded", function () {
 	loadSelects(promptSelect, modelSelect)
 	//const selectPrompt = document.getElementById('prompt-preset-select'); // Select prompt
 	promptSelect.addEventListener('change', async (e) => {
-		systemPrompt.value = loadedPrompts[e.target.value];
+		const selectedOption = e.target.options[e.target.selectedIndex];
+		const optgroupLabel = selectedOption.parentNode.label;
+		systemPrompt.value = loadedPrompts[optgroupLabel][e.target.value]
+		//console.log(`Selected option: ${selectedOption.text}, Optgroup label: ${optgroupLabel}`);
 	})
 	modelSelect.addEventListener('change', async (e) => {
 		modelLabel.innerHTML = `<img style="height:23px; width:auto;" src="${loadedModels[modelSelect.value].img}" alt="Model">`
