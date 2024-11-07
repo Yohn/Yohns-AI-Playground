@@ -23,6 +23,7 @@
 		"max_tokens": 2048,
 		"top_p": 0.1,
 		"name": "Phi-3.5-MoE instruct (128k)",
+		"endpoint": "https://models.inference.ai.azure.com",
 		"img": "https://github.com/images/modules/marketplace/models/families/microsoft.svg?size=40"
 	},
 	"Phi-3.5-mini-instruct": {

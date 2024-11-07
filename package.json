@@ -5,15 +5,27 @@
 	"type": "module",
 	"main": "server.js",
 	"scripts": {
+		"dev": "gulp dev",
 		"build": "gulp build",
 		"start": "node server.js",
 		"copyFiles": "copy-files-from-to",
 		"check": "ncu -u",
-		"dev": "gulp dev",
 		"test": "jest"
 	},
-		"yohns-descriptions": {
+	"scripts-descriptions": {
+		"dev": [
+			"Compiles js and scss files when edited. For the js files,",
+			"any files you want to compile and min, make sure to add to the src/js/index.js ",
+			"file cause thats the only file that  gets compiled."
+		],
+		"build": "builds the min css and js files from the src directory.",
+		"start": "starts the server to be accessible via the browser",
+		"copyFiles": "copies files from node-modules to corisponding paths",
+		"check": "checks for npm updates"
+	},
+	"yohns-descriptions": {
 		"scripts": {
+
 			"build": "build the css and js files",
 			"start": "starts the server to be accessible via the browser",
 			"copyFiles": [

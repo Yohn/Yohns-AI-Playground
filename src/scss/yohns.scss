@@ -8,7 +8,6 @@ $bootstrap-icons-font-dir: "./../fonts";
 @include bsBanner("");
 
 
-// scss-docs-start import-stack
 // Configuration
 @import './../../node_modules/bootstrap/scss/functions';
 
@@ -276,7 +275,7 @@ $utilities: map-merge(
 	height: 2.75rem;
 	//overflow-y: hidden;
 }
-
+/* ok */
 .nav-scroller .nav {
 	display: flex;
 	flex-wrap: nowrap;

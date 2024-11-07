@@ -184,7 +184,7 @@ async function js() {
       path.resolve('src/js/index.js'), // or use source.js if defined globally
     ],
     outfile: path.resolve('www/assets/js/app.js'),
-    minify: true,
+    //minify: true,
 		allowOverwrite: true,
     bundle: true,
     treeShaking: false, // Include all code
@@ -204,13 +204,13 @@ async function js() {
 function js_watch() {
   watch(`${source.js}/**/*.js`, async function (event, target) {
     const obj = path.parse(target);
-    let targets = [];
 
     switch (event) {
       case 'add':
       case 'change':
         if (obj.ext === '.js') {
-          targets.push(path.join(__dirname, obj.dir, obj.base));
+          // Simply calling js() here will re-bundle everything, including all dependencies of index.js
+          await js();
         }
         break;
       case 'unlink':
@@ -237,8 +237,13 @@ function js_watch() {
  */
 async function js_minify() {
   await esbuild.build({
-    entryPoints: [`${compiled.js}/**/*.js`],
-    outdir: compiled.js,
+    entryPoints: [
+      path.resolve('src/js/index.js'), // or use source.js if defined globally
+    ],
+    //outfile: path.resolve('www/assets/js/app.js'),
+    //entryPoints: [`${compiled.js}/**/*.js`],
+    outfile: path.resolve('www/assets/js/app.min.js'),
+    //outdir: compiled.js,
     minify: true,
     bundle: true,
 		allowOverwrite: true,

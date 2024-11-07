@@ -13,7 +13,7 @@ let DBconfig = new JsonDB(new Config("data/JDB/config", true, false, '/'));
 
 const token = process.env.GITHUB_TOKEN;
 const endpoint = "https://models.inference.ai.azure.com";
-const modelName = "gpt-4o-mini";
+let modelName = "gpt-4o-mini";
 						// "gpt-4o",
 const app = express();
 const port = 3000;
@@ -32,9 +32,16 @@ app.post('/submit', async (req, res) => {
 	const formData = req.body;
 
 	let msgAry = [];
+	if(formData.hasOwnProperty('model') && formData.model != "") {
+		modelName = formData.model
+	}
+	let prompt = "You are an advanced expert guru at all coding capabilities. While enforcing the use of tabs for indentation, you have a strong abbility to ensure the code you're writing is up to date with the newest versions of all languages, and using the newest features, and ensuring that the code you write is up to the standards for 2024 satisfaction. If you're unsure of any features, you will ask prior to writing the code."
+	if(formData.hasOwnProperty('prompt') && formData.prompt != "") {
+		prompt = formData.prompt
+	}
 
 	const msg = [
-			{ role: "system", content: "You are an advanced expert guru at all coding capabilities. While enforcing the use of tabs for indentation, you have a strong abbility to ensure the code you're writing is up to date with the newest versions of all languages, and using the newest features, and ensuring that the code you write is up to the standards for 2024 satisfaction. If you're unsure of any features, you will ask prior to writing the code." },
+			{ role: "system", content: prompt },
 			{ role: "user", content: formData.chatMsg },
 		];
 	const aiRes = await aiChat(token, endpoint, modelName, msg);

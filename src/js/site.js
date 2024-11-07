@@ -160,12 +160,7 @@ document.addEventListener("DOMContentLoaded", function () {
 			console.error('Error:', error);
 		}
 	});
-	Object.entries(loadedPrompts).forEach(([key, value]) => {
-    const option = document.createElement('option');
-    option.value = key;
-    option.text = key;
-    selectPrompt.appendChild(option);
-  })
+	// ok
 	loadSelects(promptSelect, modelSelect)
 	//const selectPrompt = document.getElementById('prompt-preset-select'); // Select prompt
 	promptSelect.addEventListener('change', async (e) => {
