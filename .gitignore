@@ -2,3 +2,5 @@
 /node_modules
 /.vscode/sftp.json
 /.ideas
+/.idea
+.vscode/settings.json

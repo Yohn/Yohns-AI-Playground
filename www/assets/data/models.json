@@ -1,0 +1,163 @@
+{
+	"gpt-4o" : {
+		"name": "OpenAI GPT-4o",
+		"model": "gpt-4o",
+		"temperature": 1,
+		"max_tokens": 4096,
+		"top_p": 1,
+		"endpoint":"https://models.inference.ai.azure.com",
+		"img": "https://github.com/images/modules/marketplace/models/families/openai.svg?size=40"
+	},
+	"gpt-4o-mini": {
+		"name": "OpenAI GPT-4o mini",
+		"model": "gpt-4o-mini",
+		"temperature": 1,
+		"max_tokens": 4096,
+		"top_p": 1,
+		"endpoint":"https://models.inference.ai.azure.com",
+		"img": "https://github.com/images/modules/marketplace/models/families/openai.svg?size=40"
+	},
+	"Phi-3.5-MoE-instruct" : {
+		"model": "Phi-3.5-MoE-instruct",
+		"temperature": 0.8,
+		"max_tokens": 2048,
+		"top_p": 0.1,
+		"name": "Phi-3.5-MoE instruct (128k)",
+		"img": "https://github.com/images/modules/marketplace/models/families/microsoft.svg?size=40"
+	},
+	"Phi-3.5-mini-instruct": {
+		"model": "Phi-3.5-mini-instruct",
+		"temperature": 0.8,
+		"max_tokens": 2048,
+		"top_p": 0.1,
+		"name": "Phi-3.5-mini instruct (128k)",
+		"endpoint":"https://models.inference.ai.azure.com",
+		"img": "https://github.com/images/modules/marketplace/models/families/microsoft.svg?size=40"
+	},
+	"Phi-3.5-vision-instruct": {
+		"model": "Phi-3.5-vision-instruct",
+		"temperature": 0.8,
+		"max_tokens": 2048,
+		"top_p": 0.1,
+		"name": "Phi-3.5-vision instruct (128k)",
+		"endpoint":"https://models.inference.ai.azure.com",
+		"img": "https://github.com/images/modules/marketplace/models/families/microsoft.svg?size=40"
+	},
+	"Phi-3-small-8k-instruct": {
+		"model": "Phi-3-small-8k-instruct",
+		"name": "Phi-3-small instruct (8k)",
+		"temperature": 0.8,
+		"max_tokens": 2048,
+		"top_p": 0.1,
+		"endpoint":"https://models.inference.ai.azure.com",
+		"img": "https://github.com/images/modules/marketplace/models/families/microsoft.svg?size=40"
+	},
+	"AI21-Jamba-1.5-Large": {
+		"model": "AI21-Jamba-1.5-Large",
+		"temperature": 0.8,
+		"max_tokens": 2048,
+		"top_p": 0.1,
+		"name": "AI21 Jamba 1.5 Large",
+		"endpoint":"https://models.inference.ai.azure.com",
+		"img": "https://github.com/images/modules/marketplace/models/families/ai21%20labs.svg?size=40"
+	},
+	"Llama-3.2-11B-Vision-Instruct": {
+		"model": "Llama-3.2-11B-Vision-Instruct",
+		"temperature": 0.8,
+		"max_tokens": 2048,
+		"top_p": 0.1,
+		"name": "Llama-3.2-11B-Vision-Instruct",
+		"endpoint":"https://models.inference.ai.azure.com",
+		"img": "https://github.com/images/modules/marketplace/models/families/meta.svg?size=40"
+	},
+	"Llama-3.2-90B-Vision-Instruct": {
+		"model": "Llama-3.2-90B-Vision-Instruct",
+    "temperature": 0.8,
+    "max_tokens": 2048,
+    "top_p": 0.1,
+		"name": "Llama-3.2-90B-Vision-Instruct",
+		"endpoint":"https://models.inference.ai.azure.com",
+		"img": "https://github.com/images/modules/marketplace/models/families/meta.svg?size=40"
+	},
+	"Meta-Llama-3.1-405B-Instruct": {
+		"model": "Meta-Llama-3.1-405B-Instruct",
+		"temperature": 0.8,
+		"max_tokens": 2048,
+		"top_p": 0.1,
+		"name": "Meta-Llama-3.1-405B-Instruct",
+		"endpoint":"https://models.inference.ai.azure.com",
+		"img": "https://github.com/images/modules/marketplace/models/families/meta.svg?size=40"
+	},
+	"Meta-Llama-3.1-70B-Instruct": {
+		"model": "Meta-Llama-3.1-70B-Instruct",
+		"temperature": 0.8,
+		"max_tokens": 2048,
+		"top_p": 0.1,
+		"name": "Meta-Llama-3.1-70B-Instruct",
+		"endpoint":"https://models.inference.ai.azure.com",
+		"img": "https://github.com/images/modules/marketplace/models/families/meta.svg?size=40"
+	},
+	"Meta-Llama-3.1-8B-Instruct": {
+		"model": "Meta-Llama-3.1-8B-Instruct",
+		"temperature": 0.8,
+		"max_tokens": 2048,
+		"top_p": 0.1,
+		"name": "Meta-Llama-3.1-8B-Instruct",
+		"endpoint":"https://models.inference.ai.azure.com",
+		"img": "https://github.com/images/modules/marketplace/models/families/meta.svg?size=40"
+	},
+	"Meta-Llama-3-8B-Instruct": {
+		"model": "Meta-Llama-3-8B-Instruct",
+		"temperature": 0.8,
+		"max_tokens": 2048,
+		"top_p": 0.1,
+		"name": "Meta-Llama-3-8B-Instruct",
+		"endpoint":"https://models.inference.ai.azure.com",
+		"img": "https://github.com/images/modules/marketplace/models/families/meta.svg?size=40"
+	},
+	"Ministral-3B": {
+		"model": "Ministral-3B",
+		"temperature": 0.8,
+		"max_tokens": 2048,
+		"top_p": 0.1,
+		"name": "Ministral 3B",
+		"endpoint":"https://models.inference.ai.azure.com",
+		"img": "https://github.com/images/modules/marketplace/models/families/mistral%20ai.svg?size=40"
+	},
+	"Mistral-Nemo": {
+		"model": "Mistral-Nemo",
+		"temperature": 0.8,
+		"max_tokens": 2048,
+		"top_p": 0.1,
+		"name": "Mistral Nemo",
+		"endpoint":"https://models.inference.ai.azure.com",
+		"img": "https://github.com/images/modules/marketplace/models/families/mistral%20ai.svg?size=40"
+	},
+	"Mistral-large": {
+		"model": "Mistral-large",
+		"temperature": 0.8,
+		"max_tokens": 2048,
+		"top_p": 0.1,
+		"name": "Mistral Large",
+		"endpoint":"https://models.inference.ai.azure.com",
+		"img": "https://github.com/images/modules/marketplace/models/families/mistral%20ai.svg?size=40"
+	},
+	"Mistral-large-2407": {
+		"model": "Mistral-large-2407",
+		"temperature": 0.8,
+		"max_tokens": 2048,
+		"top_p": 0.1,
+		"name": "Mistral Large (2407)",
+		"endpoint":"https://models.inference.ai.azure.com",
+		"img": "https://github.com/images/modules/marketplace/models/families/mistral%20ai.svg?size=40"
+	},
+	"Mistral-small": {
+		"model": "Mistral-small",
+		"temperature": 0.8,
+		"max_tokens": 2048,
+		"top_p": 0.1,
+		"name": "Mistral Small",
+		"endpoint":"https://models.inference.ai.azure.com",
+		"img": "https://github.com/images/modules/marketplace/models/families/mistral%20ai.svg?size=40"
+	}
+}

@@ -41,7 +41,7 @@ $enable-negative-margins: true;
 //$transition-fade:             opacity .15s linear !default;
 //// scss-docs-start collapse-transition
 //$transition-collapse:         height .35s ease !default;
-//$transition-collapse-width:   width .35s ease !default;
+$transition-collapse-width:   width .35s ease-out !default;
 
 //// scss-docs-end collapse-transition
 
@@ -251,6 +251,7 @@ $utilities: map-merge(
 // scss-docs-end import-stack
 
 @import '~@tkrotoff/bootstrap-floating-label/src/bootstrap-floating-label';
+@import './dselect.scss';
 
 //@import '../vendors/bootstrap5-tags/tags';
 //@import '~use-bootstrap-select/scss/use-bootstrap-select.scss';

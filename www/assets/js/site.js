@@ -45,6 +45,53 @@ function createMsg(from, msg){
 	container.append(msgbox);
 	return container;
 }
+async function loadSelects(promptSelect, modelSelect){
+	let selects = []
+
+	selects['prompt'] = await loadPrompts(promptSelect);
+	selects['model'] = await loadModels(modelSelect);
+
+	return selects
+}
+let loadedPrompts = {}
+async function loadPrompts(selectPrompt){
+	const response = await fetch('assets/data/prompts.json')
+	const data = response.json()
+	console.log('prompts')
+	console.log(data)
+  Object.keys(data).forEach(key => {
+    const option = document.createElement('option');
+    option.value = key;
+    option.text = key;
+    selectPrompt.appendChild(option);
+		loadedPrompts[key] = data[key];
+  })
+	dselect(selectPrompt)
+	return selectPrompt
+}
+
+let loadedModels = {}
+async function loadModels(selectModel){
+	const response = await fetch('assets/data/models.json')
+	const data = await response.json()
+	console.log('models')
+	console.log(data)
+	//Object.entries(data).forEach(([key, value]) => {
+	Object.keys(data).forEach(([key, value]) => {
+    const option = document.createElement('option');
+    option.value = key;
+    option.text = value.name
+		option.setAttribute('data-dselect-img', value.img);
+    selectModel.appendChild(option);
+		loadedModels[key] = data[key];
+  })
+	dselect(selectModel)
+	return selectModel
+}
+
+//Object.keys(data).forEach(key => {
+//  console.log(data[key].name);
+//});
 
 document.addEventListener("DOMContentLoaded", function () {
 	const chatForm = document.getElementById("chat-form"),
@@ -89,6 +136,8 @@ document.addEventListener("DOMContentLoaded", function () {
 			}
 			// Clear textarea
 			textarea.value = "";
+			const tevent = new Event('input', { bubbles: true });
+			textarea.dispatchEvent(tevent);
 
 			// Handle response
 			const result = await response.json(); // Assuming server responds with JSON
@@ -109,11 +158,32 @@ document.addEventListener("DOMContentLoaded", function () {
 		}
 	});
 
+	const promptSelect = document.getElementById('prompt-preset-select'); // Select prompt
+	const modelSelect = document.getElementById('model-preset-select');
+	loadSelects(promptSelect, modelSelect)
+	//const selectPrompt = document.getElementById('prompt-preset-select'); // Select prompt
+	promptSelect.addEventListener('change', async (e) => {
+		systemPrompt.value = loadedPrompts[e.target.value];
+	})
+	//const chatMessages = document.querySelector(".chat-messages");
+	// chat messages
+	textarea.addEventListener("input", function () {
+		// Reset the height to auto to calculate the new height correctly
+		this.style.height = 'auto';
+		// Set the new height based on content
+		const newHeight = Math.min(this.scrollHeight, window.innerHeight * 0.4);
+		this.style.height = newHeight + 'px';
+	});
+
 	const tooltipTriggerList = Array.from(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
 	tooltipTriggerList.forEach(tooltipTriggerEl => {
 		new bootstrap.Tooltip(tooltipTriggerEl)
 	})
-
+	//!-------------------------------------------------------------------!
+	//!
+	//!
+	//!
+	//!-------------------------------------------------------------------!
 	function mainCol(direction){
 		let curCol = parseInt(mainChat.getAttribute('data-yo-col'))
 		let newCol = direction == 'up' ? curCol+3 : curCol-3;
@@ -125,34 +195,34 @@ document.addEventListener("DOMContentLoaded", function () {
 	sidePanel.addEventListener('show.bs.collapse', event => {
 		settingsBtn.classList.toggle('btn-primary');
 		settingsBtn.classList.toggle('btn-outline-primary');
+		sidePanel.classList.toggle('font-zero');
 		mainCol('down');
 	})
 	sidePanel.addEventListener('hide.bs.collapse', event => {
 		settingsBtn.classList.toggle('btn-primary');
 		settingsBtn.classList.toggle('btn-outline-primary');
+		sidePanel.classList.toggle('font-zero');
 		mainCol('up');
 	})
 	toDoList.addEventListener('show.bs.collapse', event => {
 		toDoBtn.classList.toggle('btn-primary');
 		toDoBtn.classList.toggle('btn-outline-primary');
+		toDoBtn.classList.toggle('font-zero');
 		mainCol('down');
 	}) // Why cant we chain these?
 	toDoList.addEventListener('hide.bs.collapse', event => {
 		toDoBtn.classList.toggle('btn-primary');
 		toDoBtn.classList.toggle('btn-outline-primary');
+		toDoBtn.classList.toggle('font-zero');
 		mainCol('up');
 	})
-
-	//const chatMessages = document.querySelector(".chat-messages");
-
-	textarea.addEventListener("input", function () {
-		// Reset the height to auto to calculate the new height correctly
-		this.style.height = 'auto';
-		// Set the new height based on content
-		const newHeight = Math.min(this.scrollHeight, window.innerHeight * 0.4);
-		this.style.height = newHeight + 'px';
-	});
-
+	//!
+	//!------------------------------------------------------------------------!
+	//!
+	//!
+	//!
+	//!------------------------------------------------------------------------!
+	//!
 	// The theme tab within settings.. just changing the background, not sure how it'll look here though haha
 	document.getElementById("bgColor").addEventListener("input", function () {
 		document.body.style.backgroundColor = this.value;
@@ -182,4 +252,6 @@ document.addEventListener("DOMContentLoaded", function () {
 		let b = parseInt(hex.slice(5, 7), 16);
 		return `rgba(${r}, ${g}, ${b}, ${opacity})`;
 	}
+	//const wave = new TextWave('waving-text', 3);
+	//wave.start();
 });

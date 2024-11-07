@@ -22,6 +22,23 @@
 		<div class="card-body">
 			<div class="tab-content overflow-auto" id="settings-tab-content">
 				<div class="tab-pane fade active show" id="main-tab-pane" role="tabpanel" aria-labelledby="main-tab" tabindex="0">
+					<div class="input-group mb-3">
+						<span class="input-group-text" id="type-model">AI Model:</span>
+						<select class="form-select" id="model-preset-select">
+							<option value="default">..Loading..</option>
+						</select>
+					</div>
+					<span class="help-text">AI model is the different</span>
+					<div class="input-group mb-3">
+						<span class="input-group-text" id="prompt-preset">Prompt Presets</span>
+						<select class="form-select" id="prompt-preset-select">
+							<option value="default">..Loading..</option>
+						</select>
+					</div>
+					<div class="floating-label">
+						<textarea id="systemPrompt" name="systemPrompt" class="form-control" placeholder="System Prompt.."></textarea>
+						<label for="systemPrompt">System Prompt..</label>
+					</div>
 					<div>...<br>...<br>Put what I have in the to-do-list here.<br>...<br>...<br>Click the other button in the navbar...<br>...<br>...</div>
 				</div>
 				<div class="tab-pane fade" id="theme-tab-pane" role="tabpanel" aria-labelledby="theme-tab" tabindex="0">
@@ -30,9 +47,9 @@
 						<input type="color" id="bgColor" class="form-control form-control-color" value="">
 					</div>
 					<div class="mb-3 input-group color-sides">
-						<input type="color" id="gradientStart" class="form-control form-control-color" value="#f0c">
+						<input type="color" id="gradientStart" class="form-control form-control-color" value="#ff00cc">
 						<input type="range" id="gradientOpacity" class="form-control form-range" min="0" max="1" step="0.1" value="1">
-						<input type="color" id="gradientEnd" class="form-control form-control-color" value="#000">
+						<input type="color" id="gradientEnd" class="form-control form-control-color" value="#6e9dd4">
 					</div>
 				</div>
 				<div class="tab-pane fade" id="info-tab-pane" role="tabpanel" aria-labelledby="info-tab" tabindex="0">

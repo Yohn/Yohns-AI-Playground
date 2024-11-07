@@ -5,12 +5,17 @@
 	"type": "module",
 	"main": "server.js",
 	"scripts": {
+		"build": "node build.js",
 		"start": "node server.js",
 		"copyFiles": "copy-files-from-to",
-		"check": "ncu -u"
+		"check": "ncu -u",
+		"dev": "gulp dev",
+		"gukp-build": "gulp build",
+		"test": "jest"
 	},
-	"yohns-descriptions": {
+		"yohns-descriptions": {
 		"scripts": {
+			"build": "build the javascipt files",
 			"start": "starts the server to be accessible via the browser",
 			"copyFiles": [
 				"copies files from node-modules to corisponding paths",
@@ -21,24 +26,41 @@
 		}
 	},
 	"dependencies": {
+		"@skem9/dselect": "^1.1",
 		"@tkrotoff/bootstrap-floating-label": "^0.12",
 		"bootstrap": "^5.3",
 		"bootstrap-icons": "^1.11",
 		"dotenv": "^16.4",
-		"edit-json-file": "^1.8",
 		"ejs": "^3.1",
 		"express": "^4.21",
-		"npm-check-updates": "^17.1",
+		"node-json-db": "^2.3.0",
 		"openai": "^4.69"
+	},
+	"devDependencies": {
+		"esbuild": "^0.24.0",
+		"@eslint/js": "^9.14",
+		"eslint": "^9.14.0",
+		"globals": "^15.12",
+		"autoprefixer": "^10.4",
+		"browser-sync": "^3.0",
+		"cssnano": "^7.0",
+		"express": "^4.21",
+		"fs-extra": "^11.2",
+		"gulp": "^5.0",
+		"gulp-concat": "^2.6",
+		"gulp-postcss": "^10.0",
+		"gulp-rename": "^2.0",
+		"gulp-sass": "^5.1",
+		"jest": "^29.7",
+		"npm-check-updates": "^17.1",
+		"postcss": "^8.4",
+		"postcss-cli": "^11.0",
+		"sass": "^1.80",
+		"through2": "^4.0"
 	},
 	"browserslist": [
 		"defaults"
 	],
-	"devDependencies": {
-		"@eslint/js": "^9.12.0",
-		"eslint": "^9.12.0",
-		"globals": "^15.10.0"
-	},
 	"copyFiles": [
 		{
 			"from": "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
@@ -47,6 +69,18 @@
 		{
 			"from": "node_modules/bootstrap-icons/font/fonts/*",
 			"to": "www/assets/fonts"
+		},
+		{
+			"from": "node_modules/@skem9/dselect/dist/js/dselect.min.js",
+			"to": "www/assets/js/dselect.min.js"
+		},
+		{
+			"from": "node_modules/@skem9/dselect/dist/js/dselect.js",
+			"to": "www/assets/js/dselect.js"
+		},
+		{
+			"from": "node_modules/@skem9/dselect/source/css/dselect.scss",
+			"to": "www/assets/scss/dselect.scss"
 		}
 	],
 	"copyFilesSettings": {
