@@ -33,11 +33,11 @@ function createMsg(from, msg){
 	if(from === 'ai'){
 		msgbox.classList.add('shadow', 'flex-grow-1','ms-3','border','rounded','p-2','mb-2','ai-chat','bg-body-tertiary');
 		pic.classList.add('order-0')
-		pic.innerHTML = `<img src="/assets/svg/ai-6e9dd4.svg" alt="ai" style="max-width:75px; height:auto;">`
+		pic.innerHTML = `<img src="/assets/svg/ai-82ab00.svg" alt="ai" style="max-width:75px; height:auto;">`
 	} else {
 		msgbox.classList.add('shadow', 'flex-grow-1','me-3','border','rounded','p-2','mb-2','user-chat','bg-secondary-subtle');
 		pic.classList.add('order-1')
-		pic.innerHTML = `<img src="/assets/svg/me-639dd4.svg" alt="ai" style="max-width:75px; height:auto;">`
+		pic.innerHTML = `<img src="/assets/svg/me-82ab00.svg" alt="ai" style="max-width:75px; height:auto;">`
 	}
 	msgbox.innerHTML = msg;
 	msgbox.append(meta);
@@ -167,7 +167,7 @@ document.addEventListener("DOMContentLoaded", function () {
 		systemPrompt.value = loadedPrompts[e.target.value];
 	})
 	modelSelect.addEventListener('change', async (e) => {
-		modelLabel.innerHTML = `<img src="${loadedModels[key].img}" alt="Model">`
+		modelLabel.innerHTML = `<img style="height:23px; width:auto;" src="${loadedModels[modelSelect.value].img}" alt="Model">`
 	})
 	//const chatMessages = document.querySelector(".chat-messages");
 	// chat messages
