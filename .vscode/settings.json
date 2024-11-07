@@ -1,25 +1,3 @@
 {
-	"isGitignoreExtActive": true,
-	"liveSassCompile.settings.autoprefix": true,
-	"liveSassCompile.settings.excludeList": [
-		"/**/node_modules/**",
-	],
-	"liveSassCompile.settings.includeItems": [
-		"/www/assets/scss/yohns.scss"
-	],
-	"liveSassCompile.settings.showOutputWindowOn": "Trace",
-	"liveSassCompile.settings.formats": [
-		{
-			"format": "expanded",
-			"extensionName": ".auto.css",
-			"savePath": "/www/assets/css",
-			"savePathReplacementPairs": null
-		},
-		{
-			"format": "compressed",
-			"extensionName": ".auto.min.css",
-			"savePath": "/www/assets/css",
-			"savePathReplacementPairs": null
-		}
-	]
+	"isGitignoreExtActive": true
 }

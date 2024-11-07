@@ -5,17 +5,16 @@
 	"type": "module",
 	"main": "server.js",
 	"scripts": {
-		"build": "node build.js",
+		"build": "gulp build",
 		"start": "node server.js",
 		"copyFiles": "copy-files-from-to",
 		"check": "ncu -u",
 		"dev": "gulp dev",
-		"gukp-build": "gulp build",
 		"test": "jest"
 	},
 		"yohns-descriptions": {
 		"scripts": {
-			"build": "build the javascipt files",
+			"build": "build the css and js files",
 			"start": "starts the server to be accessible via the browser",
 			"copyFiles": [
 				"copies files from node-modules to corisponding paths",
@@ -63,10 +62,6 @@
 	],
 	"copyFiles": [
 		{
-			"from": "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
-			"to": "www/assets/js/bootstrap.bundle.min.js"
-		},
-		{
 			"from": "node_modules/bootstrap-icons/font/fonts/*",
 			"to": "www/assets/fonts"
 		},
@@ -80,7 +75,7 @@
 		},
 		{
 			"from": "node_modules/@skem9/dselect/source/css/dselect.scss",
-			"to": "www/assets/scss/dselect.scss"
+			"to": "www/assets/scss/plugins/_dselect.scss"
 		}
 	],
 	"copyFilesSettings": {
@@ -98,5 +93,11 @@
 				"semicolons": false
 			}
 		}
+	},
+	"yohn-removed": {
+		"from-copy-script": [{
+			"from": "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
+			"to": "www/assets/js/bootstrap.bundle.min.cjs"
+		}]
 	}
 }

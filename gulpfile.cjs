@@ -8,6 +8,17 @@ const concat 	 = require('gulp-concat');
 const esbuild  = require('esbuild')
 const through  = require('through2')
 
+//import { src, dest, watch, series, parallel } from 'gulp';
+//import fs from 'fs-extra';
+//import util from 'util';
+//import path from 'path';
+//import { exec } from 'child_process';
+//import rename from 'gulp-rename';
+////import concat from 'gulp-concat';
+//import esbuild from 'esbuild';
+//import through from 'through2';
+//const execPromisified = util.promisify(exec);
+
 const source = {
 	css : 'src/scss',
 	js	: 'src/js',
@@ -160,96 +171,78 @@ function css_minify() {
     .pipe(dest(compiled.css))
 }
 
-let filtered_js = []
 /**
- * Processes JavaScript files from the source directory.
- *
- * This function reads all JavaScript files from the `source.js` directory,
- * concatenates them into a single file named `app.js`, and transforms the
- * contents using esbuild. The transformed content is then saved to the
- * `compiled.js` directory.
+ * Processes JavaScript files from the source directory, bundling and minifying
+ * them using esbuild.
  *
  * @function js
- * @returns {Stream} A stream that handles the JavaScript processing.
+ * @returns {Promise<void>} A promise that resolves when the JavaScript processing is complete.
  */
-function js() {
-  return src(`${source.js}/**/*.js`)
-		.pipe(concat('app.js')) // Concatenate all JS files into one file
-    .pipe(through.obj(function (file, enc, callback) {
-      if (pass(file.path, filtered_js)) {
-        let content   = file.contents.toString()
-        content       = esbuild.transformSync(content).code
-        file.contents = Buffer.from(content)
-        this.push(file)
-      }
-      return callback()
-    }))
-    .pipe(dest(compiled.js))
+async function js() {
+  await esbuild.build({
+    entryPoints: [
+      path.resolve('src/js/index.js'), // or use source.js if defined globally
+    ],
+    outfile: path.resolve('www/assets/js/app.js'),
+    minify: true,
+		allowOverwrite: true,
+    bundle: true,
+    treeShaking: false, // Include all code
+    target: ['esnext'],
+    sourcemap: true,
+    write: true, // Write the output to disk
+  });
 }
 
 /**
- * Watches all JavaScript files in `source.js` and recompiles them if they or
+ * Watches all JavaScript files in `source.js` and re-bundles them if they or
  * any of their dependencies change.
  *
- * If a file is added or changed, it will be compiled only if it's not a partial
- * (i.e., its name doesn't start with an underscore) or if any file that imports
- * it has changed.
- *
- * If a file is deleted, its compiled counterpart will also be deleted.
- *
  * @function js_watch
- * @returns {Function} A function that returns a promise that resolves when the
- * watch is set up.
+ * @returns {void}
  */
 function js_watch() {
-  watch(source.js).on('all', async function (event, target) {
-    const obj = path.parse(target)
-    let targets = []
+  watch(`${source.js}/**/*.js`, async function (event, target) {
+    const obj = path.parse(target);
+    let targets = [];
+
     switch (event) {
       case 'add':
       case 'change':
         if (obj.ext === '.js') {
-          targets.push(path.join(__dirname, obj.dir, obj.base))
+          targets.push(path.join(__dirname, obj.dir, obj.base));
         }
         break;
       case 'unlink':
         const removedTarget = path.join(__dirname, target).replace(
           path.join(__dirname, source.js),
-          path.join(__dirname, compiled.js),
-        )
-        fs.removeSync(removedTarget)
-        fs.removeSync(removedTarget.slice(0, -2) + 'min.js')
+          path.join(__dirname, compiled.js)
+        );
+        fs.removeSync(removedTarget);
+        fs.removeSync(removedTarget.slice(0, -2) + 'min.js');
         break;
     }
-    filtered_js = targets
-  })
-  return watch(source.js, js)
+    filtered_js = targets;
+
+    // Trigger the js function to re-bundle
+    await js();
+  });
 }
 
 /**
  * Minifies all compiled JavaScript files that are not already minified.
  *
- * This function reads JavaScript files from the compiled directory, processes them
- * using esbuild to minify the contents, renames the files with a '.min' suffix,
- * and saves the minified versions back to the compiled directory.
- *
  * @function js_minify
- * @returns {Stream} A stream that handles the minification process.
+ * @returns {Promise<void>} A promise that resolves when the minification is done.
  */
-function js_minify() {
-  //! return src(`${compiled.js}/!(*.min).js`)
-  return src(`${compiled.js}/**/*.js`)
-    .pipe(through.obj(function (file, enc, callback) {
-      let content = file.contents.toString()
-      content = esbuild.transformSync(content, {
-        minify: true,
-      }).code
-      file.contents = Buffer.from(content)
-      this.push(file)
-      return callback()
-    }))
-    .pipe(rename({ suffix: '.min' }))
-    .pipe(dest(compiled.js))
+async function js_minify() {
+  await esbuild.build({
+    entryPoints: [`${compiled.js}/**/*.js`],
+    outdir: compiled.js,
+    minify: true,
+    bundle: true,
+		allowOverwrite: true,
+  });
 }
 
 /**

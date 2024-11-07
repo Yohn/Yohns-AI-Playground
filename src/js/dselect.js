@@ -29,50 +29,46 @@ function dselectRemoveTag(button, classElement, classToggler) {
     input.value = "";
   }
 }
-function dselectSearch(event, input, classElement, classToggler, creatable) {
+function dselectSearch(event, input, classElement, classToggler, creatable, localization) {
   const filterValue = input.value.toLowerCase().trim();
   const itemsContainer = input.nextElementSibling;
-  const headers = itemsContainer.querySelectorAll(".dropdown-header");
-  const items = itemsContainer.querySelectorAll(".dropdown-item");
+  const headers = Array.from(itemsContainer.querySelectorAll(".dropdown-header"));
+  const items = Array.from(itemsContainer.querySelectorAll(".dropdown-item"));
   const noResults = itemsContainer.nextElementSibling;
-  headers.forEach((i) => i.classList.add("d-none"));
-  for (const item of items) {
-    const filterText = item.textContent;
-    if (filterText.toLowerCase().indexOf(filterValue) > -1) {
-      item.classList.remove("d-none");
-      let header = item;
-      while (header = header.previousElementSibling) {
-        if (header.classList.contains("dropdown-header")) {
-          header.classList.remove("d-none");
-          break;
-        }
-      }
-    } else {
-      item.classList.add("d-none");
-    }
-  }
-  for (const header of headers) {
-    const filterText = header.textContent;
-    if (filterText.toLowerCase().indexOf(filterValue) > -1) {
-      header.classList.remove("d-none");
-      let item = header;
-      while (item = item.nextElementSibling) {
-        if (item.classList.contains("dropdown-header")) {
-          break;
-        }
-        item.classList.remove("d-none");
+  headers.forEach((header) => header.classList.add("d-none"));
+  items.forEach((item) => {
+    const filterText = item.textContent.toLowerCase();
+    const isVisible = filterText.includes(filterValue);
+    item.classList.toggle("d-none", !isVisible);
+    if (isVisible) {
+      let currentHeader = item.previousElementSibling;
+      while (currentHeader && !currentHeader.classList.contains("dropdown-header")) {
+        currentHeader.classList.remove("d-none");
+        currentHeader = currentHeader.previousElementSibling;
       }
     }
-  }
-  const found = Array.from(items).filter((i) => !i.classList.contains("d-none") && !i.hasAttribute("hidden"));
-  if (found.length < 1) {
+  });
+  headers.forEach((header) => {
+    const filterText = header.textContent.toLowerCase();
+    const isVisible = filterText.includes(filterValue);
+    header.classList.toggle("d-none", !isVisible);
+    if (isVisible) {
+      let currentItem = header.nextElementSibling;
+      while (currentItem && !currentItem.classList.contains("dropdown-header")) {
+        currentItem.classList.remove("d-none");
+        currentItem = currentItem.nextElementSibling;
+      }
+    }
+  });
+  const foundItems = items.filter((item) => !item.classList.contains("d-none") && !item.hasAttribute("hidden"));
+  if (foundItems.length === 0) {
     noResults.classList.remove("d-none");
     itemsContainer.classList.add("d-none");
     if (creatable) {
-      noResults.innerHTML = `Press Enter to add "<strong>${input.value}</strong>"`;
+      noResults.innerHTML = localization.replace("[searched-term]", input.value);
       if (event.key === "Enter") {
         const target = input.closest(`.${classElement}`).previousElementSibling;
-        const toggler = target.nextElementSibling.getElementsByClassName(classToggler)[0];
+        const toggler = target.nextElementSibling.querySelector(`.${classToggler}`);
         target.insertAdjacentHTML("afterbegin", `<option value="${input.value}" selected>${input.value}</option>`);
         target.dispatchEvent(new Event("change"));
         input.value = "";
@@ -100,27 +96,30 @@ function dselect(el, option = {}) {
   const classPlaceholder = "dselect-placeholder";
   const classClearBtn = "dselect-clear";
   const classTogglerClearable = "dselect-clearable";
-  const defaultClassTag = `${dselectClassTag} text-bg-dark bg-gradient`;
+  const defaultClassTag = `text-bg-dark bg-gradient`;
   const defaultSearch = false;
   const defaultCreatable = false;
   const defaultClearable = false;
   const defaultMaxHeight = "360px";
   const defaultSize = "";
   const defaultItemClass = "";
-  const defaulSearchPlaceholder = "Search..";
+  const defaultSearchPlaceholder = "Search..";
+  const defaultAddOptionPlaceholder = "Press Enter to add &quot;<strong>[searched-term]</strong>&quot;";
   const defaultNoResultsPlaceholder = "No results found";
   const search = attrBool("search") || option.search || defaultSearch;
   const creatable = attrBool("creatable") || option.creatable || defaultCreatable;
   const clearable = attrBool("clearable") || option.clearable || defaultClearable;
   const maxHeight = el.dataset.dselectMaxHeight || option.maxHeight || defaultMaxHeight;
-  const classTag = el.dataset.dselectdClassTag || option.classTag || defaultClassTag;
-  const searchPlaceholder = el.dataset.dselectSearchPlaceholder || option.searchPlaceholder || defaulSearchPlaceholder;
+  const classTagTemp = el.dataset.dselectClassTag || option.classTag || defaultClassTag;
+  const classTag = `${dselectClassTag} ${classTagTemp}`;
+  const searchPlaceholder = el.dataset.dselectSearchPlaceholder || option.searchPlaceholder || defaultSearchPlaceholder;
   const noResultsPlaceholder = el.dataset.dselectNoResultsPlaceholder || option.noResultsPlaceholder || defaultNoResultsPlaceholder;
+  const addOptionPlaceholder = el.dataset.dselectAddOptionPlaceholder || option.addOptionPlaceholder || defaultAddOptionPlaceholder;
   const itemClass = el.dataset.dselectItemClass || option.ItemClass || defaultItemClass;
   const customSize = el.dataset.dselectSize || option.size || defaultSize;
   let size = customSize !== "" ? ` form-select-${customSize}` : "";
   const classToggler = `form-select${size}`;
-  const searchInput = search ? `<input onkeydown="return event.key !== 'Enter'" onkeyup="dselectSearch(event, this, '${classElement}', '${classToggler}', ${creatable})" type="text" class="form-control" placeholder="${searchPlaceholder}" autofocus>` : "";
+  const searchInput = search ? `<input onkeydown="return event.key !== 'Enter'" onkeyup="dselectSearch(event, this, '${classElement}', '${classToggler}', ${creatable}, '${addOptionPlaceholder}')" type="text" class="form-control" placeholder="${searchPlaceholder}" autofocus>` : "";
   function attrBool(attr) {
     const attribute = `data-dselect-${attr}`;
     if (!el.hasAttribute(attribute))
@@ -175,7 +174,7 @@ function dselect(el, option = {}) {
         const disabled = option2.selected ? " disabled" : "";
         const disabledvalue = option2.getAttribute("disabled");
         const btnClass = itemClass === "" ? "" : " " + itemClass;
-        disableitem = "";
+        let disableitem = "";
         if (disabledvalue !== null) {
           disableitem = "disabled='true'";
         } else {
@@ -186,7 +185,6 @@ function dselect(el, option = {}) {
         if (option2.hasAttribute("data-dselect-img") && option2.getAttribute("data-dselect-img").trim() !== "") {
           const img = option2.getAttribute("data-dselect-img").trim();
           let imgSize = "1rem";
-          console.log(customSize);
           if (customSize == "sm") {
             imgSize = ".7rem";
           } else if (customSize == "lg") {
@@ -257,4 +255,11 @@ function dselect(el, option = {}) {
     }
   }
   el.addEventListener("change", updateDom);
+}
+if (typeof window !== "undefined") {
+  window.dselectUpdate = dselectUpdate;
+  window.dselectRemoveTag = dselectRemoveTag;
+  window.dselectSearch = dselectSearch;
+  window.dselectClear = dselectClear;
+  window.dselect = dselect;
 }

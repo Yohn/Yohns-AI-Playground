@@ -53,18 +53,20 @@ async function loadSelects(promptSelect, modelSelect){
 
 	return selects
 }
-let loadedPrompts = {}
+let loadedPrompts = {
+	"Advanced Coding Guru": "You are an advanced expert guru at all coding capabilities. While enforcing the use of tabs for indentation, you have a strong abbility to ensure the code you're writing is up to date with the newest versions of all languages, and using the newest features, and ensuring that the code you write is up to the standards for 2024 satisfaction. If you're unsure of any features, you will ask prior to writing the code."
+}
 async function loadPrompts(selectPrompt){
 	const response = await fetch('assets/data/prompts.json')
-	const data = response.json()
+	const data = await response.json()
 	console.log('prompts')
 	console.log(data)
-  Object.keys(data).forEach(key => {
+  Object.entries(await data).forEach(([key, value]) => {
     const option = document.createElement('option');
     option.value = key;
     option.text = key;
     selectPrompt.appendChild(option);
-		loadedPrompts[key] = data[key];
+		loadedPrompts[key] = value;
   })
 	dselect(selectPrompt)
 	return selectPrompt
@@ -74,16 +76,13 @@ let loadedModels = {}
 async function loadModels(selectModel){
 	const response = await fetch('assets/data/models.json')
 	const data = await response.json()
-	console.log('models')
-	console.log(data)
-	//Object.entries(data).forEach(([key, value]) => {
-	Object.keys(data).forEach(([key, value]) => {
+	Object.entries(data).forEach(([key, value]) => {
     const option = document.createElement('option');
     option.value = key;
     option.text = value.name
 		option.setAttribute('data-dselect-img', value.img);
     selectModel.appendChild(option);
-		loadedModels[key] = data[key];
+		loadedModels[key] = value;
   })
 	dselect(selectModel)
 	return selectModel
@@ -98,7 +97,11 @@ document.addEventListener("DOMContentLoaded", function () {
 		textarea = document.getElementById("chatMsg"),
 		resp = document.getElementById("resp"),
 		chatBox = document.getElementById("chat-box"),
-		loading = document.getElementById("loading-icon");
+		loading = document.getElementById("loading-icon"),
+		promptSelect = document.getElementById('prompt-preset-select'), // Select prompt
+		systemPrompt = document.getElementById('systemPrompt'), // Select prompt
+		modelSelect = document.getElementById('model-preset-select'),
+		modelLabel = document.getElementById('type-model');
 
 	let sidePanel = document.getElementById('sidePanel'),
 		settingsBtn = document.getElementById('settings-btn'),
@@ -119,8 +122,8 @@ document.addEventListener("DOMContentLoaded", function () {
 		chatBox.insertBefore(userDiv, resp);
 
 		const formData = new FormData();
-		formData.append('hello', 'Yohn');
-		formData.append('chatMsg', chatMsg);
+		formData.append('model', modelSelect.value);
+		formData.append('prompt', systemPrompt.value);
 		const plainObject = Object.fromEntries(formData);
 		try {
 			// Send POST request to server
@@ -157,13 +160,19 @@ document.addEventListener("DOMContentLoaded", function () {
 			console.error('Error:', error);
 		}
 	});
-
-	const promptSelect = document.getElementById('prompt-preset-select'); // Select prompt
-	const modelSelect = document.getElementById('model-preset-select');
+	Object.entries(loadedPrompts).forEach(([key, value]) => {
+    const option = document.createElement('option');
+    option.value = key;
+    option.text = key;
+    selectPrompt.appendChild(option);
+  })
 	loadSelects(promptSelect, modelSelect)
 	//const selectPrompt = document.getElementById('prompt-preset-select'); // Select prompt
 	promptSelect.addEventListener('change', async (e) => {
 		systemPrompt.value = loadedPrompts[e.target.value];
+	})
+	modelSelect.addEventListener('change', async (e) => {
+		modelLabel.innerHTML = `<img src="${loadedModels[key].img}" alt="Model">`
 	})
 	//const chatMessages = document.querySelector(".chat-messages");
 	// chat messages
